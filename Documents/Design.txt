@@ -1,0 +1,31 @@
+GUI
+	Machine
+		- Components
+			Memory Table: a 16x16 Table, generic table component can be 
+			designed to allow for reusability.
+			Generic Component - Single Console component that displays
+			whatever is fed into it.
+				Display Console
+				Memory Error Console
+				Disassembled Console
+			Generic Component - a 2 by X table that can be scalable and
+			reusable
+				PSW
+				Registers
+			Machine Controls
+		Service - This service is how the machine will execute, by
+		making it a front end service, we can reduce the number of
+		http reqs and res(s), as well as asynch calls, since the machine
+		is Synchronous in nature.
+			Clock
+	Text Editor
+		Component
+			Text Editor Controls
+			Text Editor
+		Service
+			Text Content
+	Compiler
+		TBD
+Back-End
+	Assembler - WALL
+	Compiler - Wython

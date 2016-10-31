@@ -1,0 +1,37 @@
+Machine Table
+	-Component
+	This component is a 2-D table with a single vertical and horizontal column dedicated as header columns. They tell the position of the table, row to column.  
+		Size: 16x16 (default), 8x8, 32x32
+			*This means that memory will have to be scalable if we decide
+			to use this functionality in WALL
+		Column Labels: Hex (default), decimal
+		Cell Hilighting: pass in coordinates to a specific cell to alter
+		it's CSS
+
+Register Tables
+	- Component
+	This component is 2-D table with a vertical column for labels, and
+	a horizontal row for column headers. For WALL it is to be used with
+	Register Table and Special Register Table
+		- Add Documents for what a Special Register is
+		- Add Documents for what the Register Table is
+
+Console
+	- Component
+	A display component for creating text views that display out text
+	to the user
+
+Text Editor
+	- Component
+	A component with a text field and a syntax hilighter.
+
+Compiler: Wython
+	- Service, back-end, http requests, promises
+Clock
+	- Service, front-end
+	A front-end service to reduce the wait time and network load (reduced promises, requests, and responses).
+	The Clock interprets the WALL Machine Code and then executes the
+	instructions.
+
+Assembler
+	- Service, back-end, http requests, promises
