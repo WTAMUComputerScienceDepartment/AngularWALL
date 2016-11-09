@@ -13,6 +13,7 @@ import { SyntaxReferenceComponent } from "./pages/syntaxReference/syntaxReferenc
 
 //Components
 import { MachineTableComponent } from "./components/machineTable/machineTable.component";
+import { RegisterTableComponent } from "./components/registerTable/registerTable.component";
 
 @NgModule({
   imports: [
@@ -20,7 +21,7 @@ import { MachineTableComponent } from "./components/machineTable/machineTable.co
   ],
   declarations: [
       AppComponent, AboutComponent, HomeComponent, LanguageReferenceComponent,
-      MachineTableComponent, SyntaxReferenceComponent
+      MachineTableComponent, RegisterTableComponent, SyntaxReferenceComponent
   ],
   bootstrap: [
       AppComponent

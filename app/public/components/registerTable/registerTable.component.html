@@ -1,0 +1,17 @@
+<div class="container-fluid">
+    <div class="row">
+        <table class="table table-bordered table-striped table-sm">
+            <thead>
+                <tr>
+                    <th *ngFor="let row of verticalHeader">{{row}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let row of registerState; let rowIndex = index">
+                    <th>{{horizontalHeader[rowIndex]}}</th>
+                    <td>{{row}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

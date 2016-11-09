@@ -6,4 +6,11 @@ import { Component } from "@angular/core";
     styleUrls: ["app/public/pages/home/home.component.css"]
 })
 
-export class HomeComponent {}
+export class HomeComponent {
+    pswState: string[] = ["00", "00 00"];
+    registerState: string[] = [
+        "00", "00", "00", "00", "00", "00", "00", "00", "00",
+        "00", "00", "00", "00", "FF", "FF", "00"
+    ];
+    pswHorizontalHeader: string[] = ["IP", "IR"];
+}
