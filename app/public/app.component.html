@@ -1,20 +1,33 @@
 <div class="container-fluid">
     <div class="row">
         <header class="col-md-12">
-            <section>
-                West Texas A&amp;M University<br>
-                WALL - WTAMU Assembly Language &amp; Machine
-            </section>
+            <div class="banner-div-style">
+                <section>
+                    West Texas A&amp;M University<br>
+                    WALL - WTAMU Assembly Language &amp; Machine
+                </section>
+            </div>
         </header>
     </div>
     <div class="row">
-        <nav class="col-md-12">
-            <ul class="nav nav-pills">
-                <li class="active">
-                    <a routerLink="/">WALL</a>
-                </li>
-            </ul>
-        </nav>
-        <router-outlet></router-outlet>
+        <div class="col-md-12">
+            <nav class="nav-header-style">
+                <ul class="nav nav-pills">
+                    <li class="active">
+                        <a routerLink="/">WALL</a>
+                    </li>
+                    <li>
+                        <a routerLink="/speaking-wall">Language Reference</a>
+                    </li>
+                    <li>
+                        <a routerLink="/speaking-wall-well">Syntax Reference</a>
+                    </li>
+                    <li>
+                        <a routerLink="/what-is-a-wall">About</a>
+                    </li>
+                </ul>
+            </nav>
+            <router-outlet></router-outlet>
+        </div>
     </div>
 </div>
