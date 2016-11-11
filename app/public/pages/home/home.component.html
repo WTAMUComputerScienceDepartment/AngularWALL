@@ -3,13 +3,33 @@
         <div class="col-xs-12 col-sm-12 col-md-6">
             <machine-table></machine-table>
         </div>
+        <div class="col-xs-12 col-sm-12 col-md-2">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <register-table [(registerState)]="pswState" [horizontalHeader]="pswHorizontalHeader"></register-table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <register-table [(registerState)]="registerState"></register-table>
+                </div>
+            </div>
+        </div>
         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-2">
-                <register-table [(registerState)]="pswState" [horizontalHeader]="pswHorizontalHeader"></register-table>
+            <div class="col-xs-12 col-sm-12 col-md-8">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-4">
+                        <console rows="10" title="Disassembled Console" [content]="content"></console>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-4">
+                        <console rows="15" title="Display Console"></console>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-4">
+                        <console rows="15" title="Memory Error Console"></console>
+                    </div>
+                </div>
             </div>
-            <div class="col-xs-12 col-sm-12 col-md-2">
-                <register-table [(registerState)]="registerState"></register-table>
-            </div>
+
         </div>
     </div>
 </div>

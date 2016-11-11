@@ -13,4 +13,6 @@ export class HomeComponent {
         "00", "00", "00", "00", "FF", "FF", "00"
     ];
     pswHorizontalHeader: string[] = ["IP", "IR"];
+
+    content: string[] = ["This", " is", " a", " test"];
 }

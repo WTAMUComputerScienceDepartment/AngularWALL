@@ -14,13 +14,14 @@ import { SyntaxReferenceComponent } from "./pages/syntaxReference/syntaxReferenc
 //Components
 import { MachineTableComponent } from "./components/machineTable/machineTable.component";
 import { RegisterTableComponent } from "./components/registerTable/registerTable.component";
+import { ConsoleComponent } from "./components/console/console.component";
 
 @NgModule({
   imports: [
       BrowserModule, routing, FormsModule
   ],
   declarations: [
-      AppComponent, AboutComponent, HomeComponent, LanguageReferenceComponent,
+      AppComponent, AboutComponent, ConsoleComponent, HomeComponent, LanguageReferenceComponent,
       MachineTableComponent, RegisterTableComponent, SyntaxReferenceComponent
   ],
   bootstrap: [
