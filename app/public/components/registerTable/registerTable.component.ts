@@ -3,7 +3,8 @@ import { Component, OnInit, Input } from "@angular/core";
 @Component({
     selector: "register-table",
     templateUrl: "app/public/components/registerTable/registerTable.component.html",
-    providers: []
+    providers: [],
+    styleUrls: ["app/public/components/registerTable/registerTable.component.css"]
 })
 
 export class RegisterTableComponent implements OnInit {
@@ -17,7 +18,11 @@ export class RegisterTableComponent implements OnInit {
         "0", "1", "2", "3", "4", "5", "6", "7",
         "8", "9", "A", "B", "C", "D", "E", "F",
     ];
+    @Input() contentSpacing: number;
 
     ngOnInit(){};
 
+    formatRegisterState(value: string): string {
+      return "";
+    };
 }

@@ -1,4 +1,6 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
+
+import { MachineStateService } from "../../services/machineState.service";
 
 @Component({
     selector: "home",
@@ -7,12 +9,17 @@ import { Component } from "@angular/core";
 })
 
 export class HomeComponent {
-    pswState: string[] = ["00", "00 00"];
-    registerState: string[] = [
-        "00", "00", "00", "00", "00", "00", "00", "00", "00",
-        "00", "00", "00", "00", "FF", "FF", "00"
-    ];
     pswHorizontalHeader: string[] = ["IP", "IR"];
+    memoryState: string[][];
+    pswState: string[];
+    registerState: string[];
+    disassembledConsoleContent: string[];
+    displayConsoleContent: string[];
+    memoryErrorContent: string [];
 
-    content: string[] = ["This", " is", " a", " test"];
+    constructor(private machineStateService: MachineStateService) {
+        this.memoryState = this.machineStateService.getMemoryState();
+        this.registerState = this.machineStateService.getRegisterState();
+        this.pswState = this.machineStateService.getPSWState();
+    };
 }

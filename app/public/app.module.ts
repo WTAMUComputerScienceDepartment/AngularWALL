@@ -16,6 +16,10 @@ import { MachineTableComponent } from "./components/machineTable/machineTable.co
 import { RegisterTableComponent } from "./components/registerTable/registerTable.component";
 import { ConsoleComponent } from "./components/console/console.component";
 
+//Services
+import { MachineStateService } from "./services/machineState.service";
+import { ClockService } from "./services/clock.service";
+
 @NgModule({
   imports: [
       BrowserModule, routing, FormsModule
@@ -23,6 +27,9 @@ import { ConsoleComponent } from "./components/console/console.component";
   declarations: [
       AppComponent, AboutComponent, ConsoleComponent, HomeComponent, LanguageReferenceComponent,
       MachineTableComponent, RegisterTableComponent, SyntaxReferenceComponent
+  ],
+  providers: [
+      ClockService, MachineStateService
   ],
   bootstrap: [
       AppComponent

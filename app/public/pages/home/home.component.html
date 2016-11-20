@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-6">
-            <machine-table></machine-table>
+            <machine-table [(machineState)]="memoryState"></machine-table>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-2">
             <div class="row">
@@ -19,13 +19,13 @@
             <div class="col-xs-12 col-sm-12 col-md-8">
                 <div class="row">
                     <div class="col-xs-12 col-sm-6 col-md-4">
-                        <console rows="10" title="Disassembled Console" [content]="content"></console>
+                        <console title="Disassembled Console" [content]="content"></console>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-4">
-                        <console rows="15" title="Display Console"></console>
+                        <console title="Display Console"></console>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-4">
-                        <console rows="15" title="Memory Error Console"></console>
+                        <console title="Memory Error Console"></console>
                     </div>
                 </div>
             </div>

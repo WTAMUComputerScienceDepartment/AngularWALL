@@ -3,7 +3,8 @@ import { Component, OnInit, Input } from "@angular/core";
 @Component({
     selector: "console",
     templateUrl: "app/public/components/console/console.component.html",
-    providers: []
+    providers: [],
+    styleUrls: ["app/public/components/console/console.component.css"]
 })
 
 export class ConsoleComponent implements OnInit {

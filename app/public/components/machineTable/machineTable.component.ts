@@ -3,7 +3,8 @@ import { Component, OnInit, Input } from "@angular/core";
 @Component({
     selector: "machine-table",
     templateUrl: "app/public/components/machineTable/machineTable.component.html",
-    providers: []
+    providers: [],
+    styleUrls: ["app/public/components/machineTable/machineTable.component.css"]
 })
 
 export class MachineTableComponent implements OnInit {
@@ -18,7 +19,7 @@ export class MachineTableComponent implements OnInit {
         "8", "9", "A", "B", "C", "D", "E", "F",
     ];
 
-    ngOnInit(){
+    ngOnInit() {
         if (!this.machineState) {
             this.machineState = new Array(this.dimension);
             for (let i = 0; i < this.dimension; i++) {
