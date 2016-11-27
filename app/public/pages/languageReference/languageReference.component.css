@@ -1,0 +1,15 @@
+table, th, td {
+     border: 1px solid black;
+}
+operations {
+    column-width: 25%;
+}
+op-codes {
+    column-width: 10%;
+}
+examples {
+    column-width: 25%;
+}
+descriptions {
+    column-width: 45%;
+}
