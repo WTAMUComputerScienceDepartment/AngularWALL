@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 
 import { MachineStateService } from "../../services/machineState.service";
+import { ClockService } from "../../services/clock.service";
 
 @Component({
     selector: "home",
@@ -17,9 +18,33 @@ export class HomeComponent {
     displayConsoleContent: string[];
     memoryErrorContent: string [];
 
-    constructor(private machineStateService: MachineStateService) {
+    constructor(private machineStateService: MachineStateService, private clockService: ClockService) {
         this.memoryState = this.machineStateService.getMemoryState();
         this.registerState = this.machineStateService.getRegisterState();
         this.pswState = this.machineStateService.getPSWState();
+    };
+
+    run(): void {
+      this.clockService.run();
+    };
+
+    step(): void {
+      this.clockService.step();
+    }
+
+    stop(): void {
+      this.clockService.stop();
+    };
+
+    assemble(): void {
+
+    };
+
+    disassemble(): void {
+
+    };
+
+    speed(): void {
+
     };
 }

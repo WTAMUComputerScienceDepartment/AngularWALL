@@ -1,35 +1,60 @@
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-6">
-            <machine-table [(machineState)]="memoryState"></machine-table>
+  <div class="row">
+    <!-- Machine -->
+    <div class="col-xs-12 col-sm-12 col-md-8">
+      <div class="row">
+        <!-- Machine Controls -->
+        <div class="col-xs-12 col-sm-12 col-md-12">
+          <!-- <div class="btn-group"> -->
+            <button class="btn btn-default" (click)="run()">Run</button>
+            <button class="btn btn-default" (click)="step()">Step</button>
+            <button class="btn btn-default" (click)="stop()">Stop</button>
+            <button class="btn btn-default" (click)="assemble()">Assemble</button>
+            <button class="btn btn-default" (click)="disassemble()">Disassemble</button>
+            <button class="btn btn-default" (click)="speed()">Speed</button>
+          <!-- </div> -->
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-2">
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12">
-                    <register-table [(registerState)]="pswState" [horizontalHeader]="pswHorizontalHeader"></register-table>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12">
-                    <register-table [(registerState)]="registerState"></register-table>
-                </div>
-            </div>
+      </div>
+      <div class="row">
+        <!-- RAM Table -->
+        <div class="col-xs-12 col-sm-12 col-md-10">
+          <machine-table [(machineState)]="memoryState"></machine-table>
         </div>
-        <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-8">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-6 col-md-4">
-                        <console title="Disassembled Console" [content]="content"></console>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4">
-                        <console title="Display Console"></console>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4">
-                        <console title="Memory Error Console"></console>
-                    </div>
-                </div>
-            </div>
+        <!-- PSW and Registers -->
+        <div class="col-xs-12 col-sm-4 col-md-1">
+          <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12">
+                  <register-table [contentSpacing]="2" [horizontalHeader]="pswHorizontalHeader"
+                                  [(registerState)]="pswState"></register-table>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12">
+                  <register-table [(registerState)]="registerState"></register-table>
+              </div>
+          </div>
+        </div>
+        <!-- Call Stack -->
+        <div class="col-xs-12 col-sm-4 col-md-1">
 
         </div>
+      </div>
+      <!-- Consoles -->
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-4">
+            <console title="Disassembled Console" [content]="content"></console>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-4">
+            <console title="Display Console"></console>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-4">
+            <console title="Memory Error Console"></console>
+        </div>
+      </div>
     </div>
+    <!-- Text Editor -->
+    <div class="col-xs-12 col-sm-8 col-md-4">
+
+    </div>
+  </div>
 </div>
