@@ -51,7 +51,7 @@ export class MachineStateService {
 	};
 
 	setMemoryCell(row: number, column: number, content: string): void {
-		// this.memoryState[row][column] = content;
+		this.memoryState[row][column] = content;
 	};
 
 	setMemoryState(ram: string[][]): void {
