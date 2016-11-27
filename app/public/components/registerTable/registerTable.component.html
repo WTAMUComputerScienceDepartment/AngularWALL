@@ -9,7 +9,7 @@
             <tbody>
                 <tr *ngFor="let row of registerState; let rowIndex = index">
                     <th>{{horizontalHeader[rowIndex]}}</th>
-                    <td>{{row}}</td>
+                    <td>{{contentSpacing ? formatRegisterState(row) : row}}</td>
                 </tr>
             </tbody>
         </table>

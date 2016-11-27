@@ -23,6 +23,13 @@ export class RegisterTableComponent implements OnInit {
     ngOnInit(){};
 
     formatRegisterState(value: string): string {
-      return "";
+      let result = "";
+      if (value.length > this.contentSpacing) {
+        for (let i = this.contentSpacing; i <= value.length; i += this.contentSpacing) {
+            result += value.substring(i - this.contentSpacing, i) + " ";
+        }
+        return result;
+      }
+      return value;
     };
 }

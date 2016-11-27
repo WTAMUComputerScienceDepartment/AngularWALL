@@ -16,8 +16,10 @@ export class ConsoleComponent implements OnInit {
 
     formatContent() {
         let result = "";
-        for (let i = 0; i < this.content.length; i++) {
+        if (this.content) {
+          for (let i = 0; i < this.content.length; i++) {
             result += this.content[i];
+          }
         }
         return result;
     };
