@@ -17,6 +17,8 @@ export class HomeComponent {
     disassembledConsoleContent: string[];
     displayConsoleContent: string[];
     memoryErrorContent: string [];
+    speedOptions: string[] = ["10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%"];
+    speed: string = "50%";
 
     constructor(private machineStateService: MachineStateService, private clockService: ClockService) {
         this.memoryState = this.machineStateService.getMemoryState();
@@ -24,8 +26,13 @@ export class HomeComponent {
         this.pswState = this.machineStateService.getPSWState();
     };
 
-    run(): void {
-      this.clockService.run();
+    run(speed?: string): void {
+      if (speed) {
+        this.clockService.run(parseInt(speed.substring(0, 2)));
+      }
+      else {
+        this.clockService.run();
+      }
     };
 
     step(): void {
@@ -41,10 +48,6 @@ export class HomeComponent {
     };
 
     disassemble(): void {
-
-    };
-
-    speed(): void {
 
     };
 }

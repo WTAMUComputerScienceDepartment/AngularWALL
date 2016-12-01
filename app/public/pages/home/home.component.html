@@ -5,14 +5,25 @@
       <div class="row">
         <!-- Machine Controls -->
         <div class="col-xs-12 col-sm-12 col-md-12">
-          <!-- <div class="btn-group"> -->
-            <button class="btn btn-default" (click)="run()">Run</button>
+          <div class="btn-group">
+            <button class="btn btn-default" (click)="run(speed)">Run</button>
             <button class="btn btn-default" (click)="step()">Step</button>
             <button class="btn btn-default" (click)="stop()">Stop</button>
             <button class="btn btn-default" (click)="assemble()">Assemble</button>
             <button class="btn btn-default" (click)="disassemble()">Disassemble</button>
-            <button class="btn btn-default" (click)="speed()">Speed</button>
-          <!-- </div> -->
+            <!-- <div class="btn-group">
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false">
+                      Speed: {{speed}} <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu">
+                <li *ngFor="let option of speedOptions">{{option}}</li>
+              </ul>
+            </div> -->
+            <select class="form-control" [(ngModel)]="speed">
+              <option *ngFor="let option of speedOptions">{{option}}</option>
+            </select>
+          </div>
         </div>
       </div>
       <div class="row">
