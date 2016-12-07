@@ -7,6 +7,8 @@ import { Component, OnInit, Input } from "@angular/core";
 })
 
 export class CallStackComponent implements OnInit {
+  @Input() title: string = "Call Stack";
+  @Input() stack;
 
-    ngOnInit() {};
+  ngOnInit() {};
 }
