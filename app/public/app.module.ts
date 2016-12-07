@@ -15,6 +15,7 @@ import { SyntaxReferenceComponent } from "./pages/syntaxReference/syntaxReferenc
 import { MachineTableComponent } from "./components/machineTable/machineTable.component";
 import { RegisterTableComponent } from "./components/registerTable/registerTable.component";
 import { ConsoleComponent } from "./components/console/console.component";
+import { CallStackComponent } from "./components/callStack/callStack.component";
 
 //Services
 import { MachineStateService } from "./services/machineState.service";
@@ -25,8 +26,9 @@ import { ClockService } from "./services/clock.service";
       BrowserModule, routing, FormsModule
   ],
   declarations: [
-      AppComponent, AboutComponent, ConsoleComponent, HomeComponent, LanguageReferenceComponent,
-      MachineTableComponent, RegisterTableComponent, SyntaxReferenceComponent
+      AppComponent, AboutComponent, CallStackComponent, ConsoleComponent,
+      HomeComponent, LanguageReferenceComponent, MachineTableComponent,
+      RegisterTableComponent, SyntaxReferenceComponent
   ],
   providers: [
       ClockService, MachineStateService

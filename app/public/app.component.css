@@ -1,5 +1,27 @@
+.banner {
+  background: linear-gradient(#80100d, black 80%);
+}
+
+.nav-bar-links > a {
+  font-family: Georgia;
+  color: white;
+}
+
+.navbar > div > div > ul > li > a {
+  font-family: Georgia;
+  color: white;
+}
+
+.navbar > div > div > ul > li > a: hover {
+  background: #80100d;
+  /*background: linear-gradient(#80100d, black 80%);  */
+}
+
+
+
+/*not used*/
 .banner-div-style {
-    display: flex;
+    /*display: flex;*/
     background: linear-gradient(#80100d, black 80%);
     box-shadow: 0px 0px 15px black;
     /*margin: 1% 1% 0% 1%;*/
@@ -11,6 +33,14 @@
     font-size: 30px;
     align-items: center; /* align vertical */
     justify-content: center;
+}
+.nav-bar {
+  vertical-align: baseline;
+}
+
+.test {
+  align-content: center;
+  justify-content: center;
 }
 
 .nav-header-style {
