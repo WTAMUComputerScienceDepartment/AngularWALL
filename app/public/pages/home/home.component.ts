@@ -19,6 +19,10 @@ export class HomeComponent {
     memoryErrorContent: string [];
     speedOptions: string[] = ["10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%"];
     speed: string = "50%";
+    registerNames: string[] = [
+        "0", "1", "2", "3", "4", "5", "6", "7",
+        "8", "9", "A", "B", "C", "D (BP)", "E (SP)", "F",
+    ];
 
     constructor(private machineStateService: MachineStateService, private clockService: ClockService) {
         this.memoryState = this.machineStateService.getMemoryState();
@@ -49,5 +53,17 @@ export class HomeComponent {
 
     disassemble(): void {
 
+    };
+
+    getIP(): string {
+      return this.machineStateService.getPSWRegister(0);
+    };
+
+    getBP(): string {
+      return this.machineStateService.getRegister(13);
+    };
+
+    getSP(): string {
+      return this.machineStateService.getRegister(14);
     };
 }

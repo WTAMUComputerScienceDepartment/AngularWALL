@@ -11,11 +11,10 @@
             <button class="btn btn-default" (click)="stop()">Stop</button>
             <button class="btn btn-default" (click)="assemble()">Assemble</button>
             <button class="btn btn-default" (click)="disassemble()">Disassemble</button>
-            <div class="form-group">
-              <select class="form-control" [(ngModel)]="speed">
-                <option *ngFor="let option of speedOptions">{{option}}</option>
-              </select>
-            </div>
+            <select class="form-control" [(ngModel)]="speed">
+              <option *ngFor="let option of speedOptions">{{option}}</option>
+            </select>
+            <button class="btn btn-default">Reset</button>
           </div>
         </div>
       </div>
@@ -23,11 +22,11 @@
       <div class="row">
         <!-- RAM Table -->
         <div class="col-xs-12 col-sm-12 col-md-8">
-          <machine-table [(machineState)]="memoryState"></machine-table>
+          <machine-table [(machineState)]="memoryState" [pswIP]="getIP()" [stackPointer]="getSP()" [basePointer]="getBP()"></machine-table>
         </div>
         <!-- Registers -->
         <div class="col-xs-12 col-sm-4 col-md-2">
-          <register-table [(registerState)]="registerState"></register-table>
+          <register-table [(registerState)]="registerState" [horizontalHeader]="registerNames"></register-table>
         </div>
         <!-- PSW and Call Stack -->
         <div class="col-xs-12 col-sm-4 col-md-2">
