@@ -31,7 +31,7 @@ export class ClockService {
 	 * speed - A percentage of how fast the machine moves. Default is 50%
 	 */
 	run(speed = 50): void {
-		speed = 4100 - (4000 * (speed * .01));
+		speed = 2100 - (2000 * (speed * .01));
 		this.runInProgress = setInterval(this.step.bind(this), speed);
 	};
 
@@ -52,12 +52,12 @@ export class ClockService {
 			address = this.resolveHexAddress(ip),
 			content = this.machineStateService.getMemoryCell(address[0], address[1]);
 
-		address = this.resolveHexAddress(this.addHexStrings(ip, "1"));
+		address = this.resolveHexAddress(this.addHexStrings(ip, "1", 2));
 		content += this.machineStateService.getMemoryCell(address[0], address[1]);
 		//update IR
 		this.machineStateService.setPSWRegister(1, content);
 		//update IP
-		this.machineStateService.setPSWRegister(0, this.addHexStrings(ip, "2"));
+		this.machineStateService.setPSWRegister(0, this.addHexStrings(ip, "2", 2));
 	};
 
 	/*
@@ -116,7 +116,12 @@ export class ClockService {
 						fourthNibble: fourthNibble
 					};
 				case "4":
-					return;
+					return {
+						firstNibble: firstNibble,
+						secondNibble: secondNibble,
+						thirdNibble: parseInt(thirdNibble, 16),
+						fourthNibble: parseInt(fourthNibble, 16)
+					};
 				case "5":
 					return {
 						firstNibble: firstNibble,
@@ -125,17 +130,97 @@ export class ClockService {
 						fourthNibble: parseInt(fourthNibble, 16)
 					};
 				case "6":
-					return;
+					switch (secondNibble) {
+							case "0":
+								return {
+									firstNibble: firstNibble,
+									secondNibble: secondNibble,
+									thirdNibble: thirdNibble,
+									fourthNibble: fourthNibble
+								};
+							case "1":
+								return {
+									firstNibble: firstNibble,
+									secondNibble: secondNibble,
+									thirdNibble: thirdNibble,
+									fourthNibble: fourthNibble
+								};
+							case "2":
+								return {
+									firstNibble: firstNibble,
+									secondNibble: secondNibble,
+									thirdNibble: thirdNibble,
+									fourthNibble: fourthNibble
+								};
+							case "3":
+								return {
+									firstNibble: firstNibble,
+									secondNibble: secondNibble,
+									thirdNibble: thirdNibble,
+									fourthNibble: fourthNibble
+								};
+							case "4":
+								return {
+									firstNibble: firstNibble,
+									secondNibble: secondNibble,
+									thirdNibble: parseInt(thirdNibble, 16),
+									fourthNibble: fourthNibble
+								};
+							case "5":
+								return {
+									firstNibble: firstNibble,
+									secondNibble: secondNibble,
+									thirdNibble: parseInt(thirdNibble, 16),
+									fourthNibble: fourthNibble
+								};
+							default:
+								return {
+									firstNibble: "C",
+									secondNibble: "0",
+									thirdNibble: "0",
+									fourthNibble: "0"
+								};
+					}
 				case "7":
-					return;
+					return {
+						firstNibble: firstNibble,
+						secondNibble: parseInt(secondNibble, 16),
+						thirdNibble: parseInt(thirdNibble, 16),
+						fourthNibble: parseInt(fourthNibble, 16)
+					};
 				case "8":
-					return;
+					return {
+						firstNibble: firstNibble,
+						secondNibble: parseInt(secondNibble, 16),
+						thirdNibble: parseInt(thirdNibble, 16),
+						fourthNibble: parseInt(fourthNibble, 16)
+					};
 				case "9":
-					return;
+					return {
+						firstNibble: firstNibble,
+						secondNibble: parseInt(secondNibble, 16),
+						thirdNibble: parseInt(thirdNibble, 16),
+						fourthNibble: parseInt(fourthNibble, 16)
+					};
 				case "A":
 					return;
 				case "B":
-					return;
+					switch(secondNibble) {
+						case "0":
+							return {
+								firstNibble: firstNibble,
+								secondNibble: secondNibble,
+								thirdNibble: thirdNibble,
+								fourthNibble: fourthNibble
+							};
+						default:
+							return {
+								firstNibble: firstNibble,
+								secondNibble: parseInt(secondNibble, 16),
+								thirdNibble: thirdNibble,
+								fourthNibble: fourthNibble
+							};
+					}
 				case "C":
 					return {
 						firstNibble: firstNibble,
@@ -144,11 +229,50 @@ export class ClockService {
 						fourthNibble: fourthNibble
 					};
 				case "D":
-					return;
+					switch(secondNibble) {
+						case "0":
+							return {
+								firstNibble: firstNibble,
+								secondNibble: secondNibble,
+								thirdNibble: parseInt(thirdNibble, 16),
+								fourthNibble: parseInt(fourthNibble, 16)
+							};
+						case "1":
+							return {
+								firstNibble: firstNibble,
+								secondNibble: secondNibble,
+								thirdNibble: parseInt(thirdNibble, 16),
+								fourthNibble: parseInt(fourthNibble, 16)
+							};
+						case "2":
+							return {
+								firstNibble: firstNibble,
+								secondNibble: secondNibble,
+								thirdNibble: parseInt(thirdNibble, 16),
+								fourthNibble: parseInt(fourthNibble, 16)
+							};
+						default:
+							return {
+								firstNibble: firstNibble,
+								secondNibble: secondNibble,
+								thirdNibble: thirdNibble,
+								fourthNibble: fourthNibble
+							};
+					}
 				case "E":
-					return;
+					return {
+						firstNibble: firstNibble,
+						secondNibble: secondNibble,
+						thirdNibble: parseInt(thirdNibble, 16),
+						fourthNibble: parseInt(fourthNibble, 16)
+					};
 				case "F":
-					return;
+					return {
+						firstNibble: firstNibble,
+						secondNibble: parseInt(secondNibble, 16),
+						thirdNibble: thirdNibble,
+						fourthNibble: fourthNibble
+					};
 				default:
 					return {
 						firstNibble: "C",
@@ -223,8 +347,9 @@ export class ClockService {
 	 *
 	 */
 	rload(offset: string, destReg: number, srcReg: number): void {
-		let address = this.machineStateService.getRegister(srcReg);
-		let content = this.addHexStrings(offset, address);
+		let offsetAddr = this.addHexStrings(offset, this.machineStateService.getRegister(srcReg), 2);
+		let resolvedAddr = this.resolveHexAddress(offsetAddr);
+		let content = this.machineStateService.getMemoryCell(resolvedAddr[0], resolvedAddr[1]);
 		this.machineStateService.setRegister(destReg, content);
 	};
 
@@ -238,30 +363,47 @@ export class ClockService {
 	add(destReg: number, srcRegA: number, srcRegB: number): void {
 		let valueA = this.machineStateService.getRegister(srcRegA);
 		let valueB = this.machineStateService.getRegister(srcRegB);
-		this.machineStateService.setRegister(destReg, this.addHexStrings(valueA, valueB));
+		let result = this.addHexStrings(valueA, valueB, 2)
+		if (result.length > 2)
+			result = result.slice(-2);
+		this.machineStateService.setRegister(destReg, result);
 	};
 
 	/*
-	 * CALL (60 XY) -
+	 * CALL (60 XY) - Stores the value of the IP in the memory address pointed to
+	 *							  by the Stack Pointer (Register D). Then loads the value XY
+	 *								into the IP. Maintains integrity of Stack.
 	 *
 	 */
-	call(): void {
-
+	call(thirdNibble: string, fourthNibble: string): void {
+		let sp = this.machineStateService.getRegister(14);
+		let address = this.resolveHexAddress(this.subtractHexStrings(sp, "01"));
+		let ip = this.machineStateService.getPSWRegister(0);
+		this.machineStateService.setMemoryCell(address[0], address[1], ip);
+		this.machineStateService.setPSWRegister(0, thirdNibble + fourthNibble);
+		this.machineStateService.setRegister(14, this.subtractHexStrings(sp, "01"));
 	};
 
 	/*
 	 * RET (61 XY) -
 	 *
 	 */
-	ret(): void {
-
+	ret(thirdNibble: string, fourthNibble: string): void {
+		let sp = this.machineStateService.getRegister(14);
+		let address = this.resolveHexAddress(sp);
+		let content = this.machineStateService.getMemoryCell(address[0], address[1]);
+		this.machineStateService.setPSWRegister(0, content);
+		this.machineStateService.setRegister(14, this.addHexStrings(sp, thirdNibble + fourthNibble, 2));
 	};
 
 	/*
 	 * SCALL (62 XY) -
 	 *
 	 */
-	scall(): void {
+	scall(thirdNibble: string, fourthNibble: string): void {
+		this.call(thirdNibble, fourthNibble);
+		this.push(13);
+		this.move(13, 14);
 
 	};
 
@@ -270,23 +412,35 @@ export class ClockService {
  	 *
  	 */
 	sret(): void {
-
+		this.pop(13, "0");
+		this.ret("0", "1");
+		this.move(14, 13);
 	};
 
 	/*
-	 * PUSH (64 N0) -
+	 * PUSH (64 N0) - Decrement the Stack Pointer (Register D) and place the value
+	 *                in Register N into the memory cell it now points to.
 	 *
 	 */
-	push(): void {
-
+	push(thirdNibble: number, fourthNibble?: string): void {
+		let sp = this.subtractHexStrings(this.machineStateService.getRegister(14), "01");
+		let address = this.resolveHexAddress(sp);
+		let content = this.machineStateService.getRegister(thirdNibble);
+		this.machineStateService.setMemoryCell(address[0], address[1], content);
+		this.machineStateService.setRegister(14, sp);
 	};
 
 	/*
-	 * POP (65 N0) -
+	 * POP (65 N0) - Place the value in the memory cell pointed to by the Stack Pointer
+	 *							 into Register N and Increment the Stack Pointer (Register D).
 	 *
 	 */
-	pop(): void {
-
+	pop(thirdNibble: number, fourthNibble: string): void {
+		let sp = this.machineStateService.getRegister(14);
+		let address = this.resolveHexAddress(sp);
+		let content = this.machineStateService.getMemoryCell(address[0], address[1]);
+		this.machineStateService.setRegister(thirdNibble, content);
+		this.machineStateService.setRegister(14, this.addHexStrings(sp, "01", 2));
 	};
 
 	/*
@@ -423,16 +577,36 @@ export class ClockService {
 	 * srcReg - Source register (N); 0-15
 	 * destReg - Destination register (M); 0-15
 	 */
-	istore(srcReg: number, destReg: number): void {
+	istore(thirdNibble: number, fourthNibble: number): void {
+		let content = this.machineStateService.getRegister(fourthNibble);
+		let address = this.resolveHexAddress(this.machineStateService.getRegister(thirdNibble));
+		this.machineStateService.setMemoryCell(address[0], address[1], content);
+	};
 
+	/*
+	 * MOVE (D2 NM) - Copies the value from Register M to Register N
+	 */
+	move(thirdNibble: number, fourthNibble: number) {
+		let content = this.machineStateService.getRegister(fourthNibble);
+		this.machineStateService.setRegister(thirdNibble, content);
 	};
 
 	/*
 	 * RSTORE (EH MN) -
 	 *
 	 */
-	rstore(): void {
+	rstore(secondNibble: string, thirdNibble: number, fourthNibble: number): void {
+		let address = this.machineStateService.getRegister(thirdNibble);
+		let content = this.machineStateService.getRegister(fourthNibble);
+		let offsetAddress, offset;
 
+		if (parseInt(secondNibble, 16) > 8) {
+			offset = parseInt(secondNibble, 16) - 16;
+			offsetAddress = this.resolveHexAddress(this.addHexStrings(address, offset.toString(16), 2));
+		}
+		else
+			offsetAddress = this.resolveHexAddress(this.addHexStrings(address, secondNibble, 2));
+		this.machineStateService.setMemoryCell(offsetAddress[0], offsetAddress[1], content);
 	};
 
 	/*
@@ -446,8 +620,17 @@ export class ClockService {
 		}
 	};
 
-	addHexStrings(hexValA: string, hexValB: string): string {
-		let result = (parseInt(hexValA, 16) + parseInt(hexValB, 16)).toString(16);
+	addHexStrings(hexValA: string, hexValB: string, size: number): string {
+		let result = (parseInt(hexValA, 16) + parseInt(hexValB, 16)).toString(16).toUpperCase();
+		if (result.length >= size)
+			result.slice(-size);
+		else
+			result = "0".repeat(size - result.length) + result;
+		return result;
+	};
+
+	subtractHexStrings(hexValA: string, hexValB: string): string {
+		let result = (parseInt(hexValA, 16) - parseInt(hexValB, 16)).toString(16).toUpperCase();
 		return result.length >= 2 ? result : "0" + result;
 	};
 
