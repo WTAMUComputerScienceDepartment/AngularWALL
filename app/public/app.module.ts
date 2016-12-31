@@ -2,6 +2,9 @@ import { NgModule }      from '@angular/core';
 import { FormsModule }   from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
+//Third-Party Imports
+import { DropdownModule } from 'ng2-bootstrap';
+
 import { routing } from "./app.routing";
 import { AppComponent } from "./app.component";
 
@@ -23,7 +26,7 @@ import { ClockService } from "./services/clock.service";
 
 @NgModule({
   imports: [
-      BrowserModule, routing, FormsModule
+      BrowserModule, routing, FormsModule, DropdownModule.forRoot()
   ],
   declarations: [
       AppComponent, AboutComponent, CallStackComponent, ConsoleComponent,

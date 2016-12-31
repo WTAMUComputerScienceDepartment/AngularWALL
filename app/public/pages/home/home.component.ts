@@ -17,8 +17,8 @@ export class HomeComponent {
     disassembledConsoleContent: string[];
     displayConsoleContent: string[];
     memoryErrorContent: string [];
-    speedOptions: string[] = ["10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%"];
-    speed: string = "50%";
+    speedOptions: number[] = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+    speed: {value: number} = {value: 50};
     registerNames: string[] = [
         "0", "1", "2", "3", "4", "5", "6", "7",
         "8", "9", "A", "B", "C", "D (BP)", "E (SP)", "F",
@@ -30,13 +30,8 @@ export class HomeComponent {
         this.pswState = this.machineStateService.getPSWState();
     };
 
-    run(speed?: string): void {
-      if (speed) {
-        this.clockService.run(parseInt(speed.substring(0, 2)));
-      }
-      else {
-        this.clockService.run();
-      }
+    run(): void {
+      this.clockService.run(this.speed.value);
     };
 
     step(): void {
@@ -53,6 +48,18 @@ export class HomeComponent {
 
     disassemble(): void {
 
+    };
+
+    reset(): void {
+
+    };
+
+    setSpeed(speed: number, $event?): void {
+      if ($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+      }
+      this.speed = { value: speed };
     };
 
     getIP(): string {

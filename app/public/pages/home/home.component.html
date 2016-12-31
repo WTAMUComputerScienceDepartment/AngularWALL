@@ -4,17 +4,38 @@
     <div class="col-xs-12 col-sm-12 col-md-8">
       <div class="row">
         <!-- Machine Controls -->
-        <div class="col-xs-12 col-sm-12 col-md-12">
-          <div class="btn-group">
-            <button class="btn btn-default" (click)="run(speed)">Run</button>
-            <button class="btn btn-default" (click)="step()">Step</button>
-            <button class="btn btn-default" (click)="stop()">Stop</button>
-            <button class="btn btn-default" (click)="assemble()">Assemble</button>
-            <button class="btn btn-default" (click)="disassemble()">Disassemble</button>
-            <select class="form-control" [(ngModel)]="speed">
-              <option *ngFor="let option of speedOptions">{{option}}</option>
-            </select>
-            <button class="btn btn-default">Reset</button>
+        <div class="col-xs-12 col-sm-12 col-md-12 well well-sm">
+          <div class="btn-group btn-group-justified">
+            <div class="btn-group" dropdown>
+              <button id="split-button" style="width:80%;" class="btn btn-primary"
+                      (click)="run()">
+                      Run: {{speed.value}}%
+              </button>
+              <button type="button" style="width:20%" class="btn btn-primary" dropdownToggle>
+                <span class="caret caret-btn"></span>
+                <span class="sr-only">Run Speeds</span>
+              </button>
+              <ul class="dropdown-menu" dropdownMenu role="menu" aria-labelledby="split-button">
+                <li *ngFor="let option of speedOptions">
+                  <a href="" (click)="setSpeed(option, $event)">{{option}}%</a>
+                </li>
+              </ul>
+            </div>
+            <div class="btn-group">
+              <button class="btn btn-default" (click)="step()">Step</button>
+            </div>
+            <div class="btn-group">
+              <button class="btn btn-danger" (click)="stop()">Stop</button>
+            </div>
+            <div class="btn-group">
+              <button class="btn btn-default" (click)="assemble()">Assemble</button>
+            </div>
+            <div class="btn-group">
+              <button class="btn btn-default" (click)="disassemble()">Disassemble</button>
+            </div>
+            <div class="btn-group">
+              <button class="btn btn-danger" (click)="reset()">Reset</button>
+            </div>
           </div>
         </div>
       </div>
