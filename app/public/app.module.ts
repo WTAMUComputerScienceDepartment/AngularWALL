@@ -24,6 +24,9 @@ import { CallStackComponent } from "./components/callStack/callStack.component";
 import { MachineStateService } from "./services/machineState.service";
 import { ClockService } from "./services/clock.service";
 
+//Pipes
+import { OperationFilterPipe } from "./pages/languageReference/operationFilter.pipe";
+
 @NgModule({
   imports: [
       BrowserModule, routing, FormsModule, DropdownModule.forRoot()
@@ -31,7 +34,7 @@ import { ClockService } from "./services/clock.service";
   declarations: [
       AppComponent, AboutComponent, CallStackComponent, ConsoleComponent,
       HomeComponent, LanguageReferenceComponent, MachineTableComponent,
-      RegisterTableComponent, SyntaxReferenceComponent
+      OperationFilterPipe, RegisterTableComponent, SyntaxReferenceComponent
   ],
   providers: [
       ClockService, MachineStateService

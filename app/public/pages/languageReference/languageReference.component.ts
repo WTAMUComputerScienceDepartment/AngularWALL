@@ -1,4 +1,9 @@
-import { Component } from "@angular/core";
+import { Component, Input } from "@angular/core";
+
+import { OperationFilterPipe } from "./operationFilter.pipe";
+
+import { Operation } from "./operation";
+import { OPERATIONS } from "./operations";
 
 @Component({
     selector: "languageReference",
@@ -6,4 +11,22 @@ import { Component } from "@angular/core";
     styleUrls: ["app/public/app.component.css", "app/public/pages/languageReference/languageReference.component.css"]
 })
 
-export class LanguageReferenceComponent {}
+export class LanguageReferenceComponent {
+  columns: String[] = Object.keys(OPERATIONS[0]);
+  operations: Operation[] = OPERATIONS;
+
+  filter: Operation = new Operation();
+
+  operationsFilter(): any {
+    let result = [];
+
+    for (let prop in this.filter) {
+      for (let i = 0; i < this.operations.length; i++) {
+        if (this.operations[i][prop].includes(this.filter[prop]))
+          result.push(this.operations[i]);
+      }
+    }
+
+    return result;
+  };
+}
