@@ -21,6 +21,7 @@ import { ConsoleComponent } from "./components/console/console.component";
 import { CallStackComponent } from "./components/callStack/callStack.component";
 
 //Services
+import { AssemblerService } from "./services/assembler.service";
 import { MachineStateService } from "./services/machineState.service";
 import { ClockService } from "./services/clock.service";
 
@@ -37,7 +38,7 @@ import { OperationFilterPipe } from "./pages/languageReference/operationFilter.p
       OperationFilterPipe, RegisterTableComponent, SyntaxReferenceComponent
   ],
   providers: [
-      ClockService, MachineStateService
+      AssemblerService, ClockService, MachineStateService
   ],
   bootstrap: [
       AppComponent

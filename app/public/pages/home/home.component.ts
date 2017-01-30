@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 
+import { AssemblerService } from "../../services/assembler.service";
 import { MachineStateService } from "../../services/machineState.service";
 import { ClockService } from "../../services/clock.service";
 
@@ -24,7 +25,8 @@ export class HomeComponent {
         "8", "9", "A", "B", "C", "D (BP)", "E (SP)", "F",
     ];
 
-    constructor(private machineStateService: MachineStateService, private clockService: ClockService) {
+    constructor(private machineStateService: MachineStateService, private clockService: ClockService,
+                private assemblerService: AssemblerService) {
         this.memoryState = this.machineStateService.getMemoryState();
         this.registerState = this.machineStateService.getRegisterState();
         this.pswState = this.machineStateService.getPSWState();
