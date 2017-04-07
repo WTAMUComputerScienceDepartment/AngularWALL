@@ -72,6 +72,13 @@ export class AssemblerService {
         else if (line.length > 1) { //if label, has op/pseudoOp ?
           switch (line[0].toLowerCase()) {
             case "bss":
+              if (this.isValidHex(line[1], 2))
+                currentAddress += parseInt(line[1], 16);
+              else if (this.isValidInt(line[1], 3))
+                currentAddress += parseInt(line[1]);
+              else //invalid operand
+                this.errors.push({}); 
+              break;
             case "org":
               if (this.isValidHex(line[1], 2))
                 currentAddress = parseInt(line[1], 16);
@@ -105,7 +112,14 @@ export class AssemblerService {
           }
         }
         else //op/pseudoOp missing operand
-          this.errors.push({});
+          switch(line[0].toUpperCase()) {
+            case "RET": //Exceptions - can have no operands
+            case "SRET":
+              currentAddress += 2;
+              break;
+            default:
+              this.errors.push({});
+          }
       // }
     }
     console.log(this.labelAddrMap);
@@ -125,25 +139,25 @@ export class AssemblerService {
       let byteCode = "0000", line = this.srcCode[i], opCode = line[0].toUpperCase();
       switch(opCode) {
         case "BSS": //TODO: Handle Errors
-          address += parseInt(this.resolveNumericArg(line[1]), 16);
+          address += parseInt(this.resolveNumericArg(line[1], 2), 16);
           isPseudoOp = true;
           break;
         case "ORG": //TODO: Handle Errors
-          address = parseInt(this.resolveNumericArg(line[1]), 16);
+          address = parseInt(this.resolveNumericArg(line[1], 2), 16);
           isPseudoOp = true;
           break;
         case "DB": //TODO: Handle Errors
-          for (let j = 1; j < line.length-1; j++) {
+          for (let j = 1; j <= line.length-1; j++) {
             if (/"/.test(line[j])) {
               let str = line[j];
               for (let pos = 1; pos < str.length-1; pos++) {
-                this.assembledCode[address++] = str.charCodeAt(pos).toString(16);
+                this.assembledCode[address++] = str.charCodeAt(pos).toString(16).toUpperCase();
               }
             }
             else if (this.labelAddrMap.hasOwnProperty(line[j])) 
-              this.assembledCode[address++] = parseInt(this.labelAddrMap[line[j]], 16).toString();
+              this.assembledCode[address++] = parseInt(this.labelAddrMap[line[j]], 16).toString().toUpperCase();
             else
-              this.assembledCode[address++] = this.resolveNumericArg(line[j]);
+              this.assembledCode[address++] = this.resolveNumericArg(line[j], 2, true).toUpperCase();
           }
           isPseudoOp = true;
           break;
@@ -151,7 +165,7 @@ export class AssemblerService {
           if (this.labelAddrMap.hasOwnProperty(line[1]))
             this.sip = this.labelAddrMap[line[1]];
           else
-            this.sip = this.resolveNumericArg(line[1]);
+            this.sip = this.resolveNumericArg(line[1], 2);
           isPseudoOp = true;
           break;
         case "EQU":
@@ -207,7 +221,7 @@ export class AssemblerService {
           break;
         case "LOAD":
           if (line.length === 3) {
-            if (/\[[.+]\]/.test(line[2]))
+            if (/\[.+\]/.test(line[2]))
               byteCode = this.OPERATIONS[opCode].DIRECT + this.registerImmediateFormat(line[1], line[2].slice(1, line[2].length -1), 0, true);
             else
               byteCode = this.OPERATIONS[opCode].IMMEDIATE + this.registerImmediateFormat(line[1], line[2], 0, true);
@@ -218,7 +232,7 @@ export class AssemblerService {
         case "JMPEQ":
           if (line.length === 3) {
               let firstOperand = line[1].split("=");
-              if (firstOperand.length === 2 && this.isValidRegister(firstOperand[2], "R0"))
+              if (firstOperand.length === 2 && this.isValidRegister(firstOperand[1], "R0"))
                 byteCode = this.OPERATIONS[opCode] + this.registerImmediateFormat(firstOperand[0], line[2], 0, true);
           }
           else 
@@ -227,12 +241,74 @@ export class AssemblerService {
         case "JMPLT":
           if (line.length === 3) {
             let firstOperand = line[1].split("<");
-            if (firstOperand.length === 2 && this.isValidRegister(firstOperand[2], "R0"))
+            if (firstOperand.length === 2 && this.isValidRegister(firstOperand[1], "R0"))
               byteCode = this.OPERATIONS[opCode] + this.registerImmediateFormat(firstOperand[0], line[2], 0, true);
           }
           else 
             this.errors.push({});
          break;
+        case "CALL": //Immediate Value Format
+        case "JMP":
+        case "SCALL":
+          if (line.length === 2)
+            byteCode = this.OPERATIONS[opCode] + this.immediateValueFormat(line[1], true);
+          else
+            this.errors.push({});
+          break;
+        case "RET":
+          if (line.length === 2) {
+            let value = this.immediateValueFormat(line[1], false);
+            if (this.isValidHex("0x" + value, 2)) {
+              value = (parseInt(value, 16) + 1).toString(16);
+              value = value.length < 2 ? "0" + value : value;
+              byteCode = this.OPERATIONS[opCode] + value;
+            }
+            else { //should never reach here
+              byteCode = this.OPERATIONS[opCode] + "01";
+              this.errors.push({});
+            }
+          }
+          else
+            byteCode = this.OPERATIONS[opCode] + this.immediateValueFormat("1", false);
+          break;
+        
+        case "STORE": //Aberrants, not conforming exactly to the defined formats.
+          if (line.length === 3) {
+            if (/\[.+\]/.test(line[1]))
+              byteCode = this.OPERATIONS[opCode] + this.registerImmediateFormat(line[2], line[1].slice(1, line[1].length-1), 0, true);
+          }
+          else
+            this.errors.push({});
+          break;
+        case "RSTORE":
+          if (line.length === 3) {
+            if (/\[.+\]/.test(line[1])) {
+              let firstOperand = line[1].split("[");
+              byteCode = this.OPERATIONS[opCode] + this.offsetDoubleRegisterFormat(firstOperand[0], firstOperand[1].slice(0, firstOperand[1].length-1), line[2]);
+            }
+            else {
+              this.errors.push({});
+            }
+          }
+          else
+            this.errors.push({}); 
+          break;
+        case "RLOAD":
+          if (line.length === 3) {
+            if (/\[.+\]/.test(line[2])) {
+              let secondOperand = line[2].split("[");
+              byteCode = this.OPERATIONS[opCode] + this.offsetDoubleRegisterFormat(secondOperand[0], secondOperand[1].slice(0, secondOperand[1].length-1), line[1]);
+            }
+            else {
+              this.errors.push({});
+            }
+          }
+          else
+            this.errors.push({});
+          break;
+        case "SRET":
+          byteCode = this.OPERATIONS[opCode] + "01";
+          break;
         case "HALT":
         case "NOOP":
           byteCode = this.OPERATIONS[opCode] + "000";
@@ -293,7 +369,7 @@ export class AssemblerService {
     operand += validDestReg ? this.resolveRegister(destReg) : "0";
     if (errors && !validDestReg)
       errors.invalidOperand = destReg + ": " + validDestReg;
-    return operand;
+    return operand + "0";
   };
 
   /*
@@ -321,9 +397,34 @@ export class AssemblerService {
       }
     }
     else {
-      operand += this.resolveNumericArg(immediateValue, errors);
+      operand += this.resolveNumericArg(immediateValue, 2, true, errors);
   }
     return operand;
+  };
+
+  private immediateValueFormat(immediateValue: string, labels?: boolean, errors?): string {
+    let label = this.labelAddrMap[immediateValue];
+
+    if (labels && label) {
+      let operand = label.toString(16), padding = operand.length === 1 ? "0" : "";
+      return padding + operand;
+    }
+    else {
+      return this.resolveNumericArg(immediateValue, 2, true, errors);
+    }
+  };
+
+  private offsetDoubleRegisterFormat(offset: string, destReg: string, srcReg: string, errors?): string {
+    let validOffset = this.isValidInt(offset, 1, /^-/.test(offset)) || this.isValidHex(offset, 1), validDestReg = this.isValidRegister(destReg), 
+        validSrcReg = this.isValidRegister(srcReg),operand = "";
+
+    operand += validOffset ? this.resolveNumericArg(offset, 1) : "0";
+    operand += validDestReg ? this.resolveRegister(destReg) : "0";
+    operand += validSrcReg ? this.resolveRegister(srcReg) : "0";
+    if (errors && (!validOffset || !validDestReg || !validSrcReg))
+      errors.invalidOperand = offset + ": " + validOffset + ", " + destReg + ": " + validDestReg + ", " + srcReg + ": " + validSrcReg;
+    return operand;
+    
   };
 
   private isValidHex(value: string, size: number): boolean {
@@ -358,18 +459,24 @@ export class AssemblerService {
     return /RBP|RSP|R[0-9a-fA-F]{1}/.test(value);
   };
 
-  private resolveNumericArg(num: string, errors?): string {
-    let negative = num.slice[0] === "-";
-    if (this.isValidHex(num, 2)) {
-      return num.slice(2);
+  private resolveNumericArg(num: string, size: number, padding?: boolean, errors?): string {
+    let negative = num.slice(0, 1) === "-", numericArg = "0".repeat(size);
+    if (this.isValidHex(num, size)) {
+      numericArg = num.slice(2);
+      return padding ? "0".repeat(size-numericArg.length) + numericArg : numericArg;
     }
-    else if (this.isValidInt(num, 3, negative)) {
-      num = negative ? num.slice(1) : num;
-      return parseInt(num).toString(16);
+    else if (this.isValidInt(num, size, negative)) {
+        let value;
+        if (negative) {
+          let max = parseInt("F".repeat(size), 16) + 1;
+          value = max - parseInt(num.slice(1));
+        }
+        value = value ? value.toString(16) : parseInt(num).toString(16);
+        return padding ? "0".repeat(size - value.length) + value : value;
     }
     else if (errors)
       errors.invalidOperand = num + ": true";
-    return "00";
+    return numericArg;
   };
 
   private resolveRegister(value: string): string {
@@ -379,5 +486,9 @@ export class AssemblerService {
       return "D";
     else
       return value.charAt(1);
+  }
+
+  public getAssembledCode(): string[] {
+    return this.assembledCode;
   }
 };
