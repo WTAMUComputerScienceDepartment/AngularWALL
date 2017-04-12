@@ -2,12 +2,12 @@ import { Injectable } from "@angular/core";
 
 @Injectable()
 export class MachineStateService {
-	private registerState: string[] = [
+	private _registerState: string[] = [
 	    "00", "00", "00", "00", "00", "00", "00", "00", "00",
 	    "00", "00", "00", "00", "FF", "FF", "00"
 	];
-	private pswState: string[] = ["00", "0000"];
-	private memoryState: string[][] = [
+	private _pswState: string[] = ["40", "0000"];
+	private _memoryState: string[][] = [
 		["00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00"],
 		["00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00"],
 		["00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00"],
@@ -26,51 +26,53 @@ export class MachineStateService {
 		["00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00"]
 	];
 
-	getMemoryCell(row: number, column: number): string {
-		return this.memoryState[row][column];
+	/*
+	 *	loadMachineCode - takes WALL machine code and places it into memory and
+	 *					  loads up the IP in PSW.
+	 */
+	loadMachineCode(): void {
+
 	};
 
-	getMemoryState(): string[][] {
-		return this.memoryState;
+	//getters + setters
+
+	get memoryState(): string[][] {
+		return this._memoryState;
 	};
 
-	getPSWRegister(pswRegister: number): string {
-		return this.pswState[pswRegister];
-	};
-
-	getPSWState(): string[] {
-		return this.pswState;
-	};
-
-	getRegister(register: number): string {
-		return this.registerState[register];
-	};
-
-	getRegisterState(): string[] {
-		return this.registerState;
+	set memoryState(ram: string[][]) {
+		for (let i = 0; i < 16; i++) {
+			for (let j = 0; j < 16; j++) {
+				this.memoryState[i][j] = ram[i][j];
+			}
+		}
 	};
 
 	setMemoryCell(row: number, column: number, content: string): void {
 		this.memoryState[row][column] = content;
 	};
 
-	setMemoryState(ram: string[][]): void {
-		this.memoryState = ram;
+	get pswState(): string[] {
+		return this._pswState;
+	};
+	
+	set pswState(psw: string[]) {
+		this.pswState = psw;
 	};
 
 	setPSWRegister(pswRegister: number, content: string): void {
 		this.pswState[pswRegister] = content;
 	};
 
-	setPSWState(psw: string[]): void {
-		this.pswState = psw;
+	get registerState(): string[] {
+		return this._registerState;
+	};
+
+	set registerState(registers: string[]) {
+		this.registerState = registers;
 	};
 
 	setRegister(register: number, content: string): void {
 		this.registerState[register] = content;
-	};
-
-	setRegisterState(registers: string[]): void {
-		this.registerState = registers;
 	};
 }
