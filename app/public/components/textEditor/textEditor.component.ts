@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 
 // import * as ace from "ace-builds";
 
@@ -10,5 +10,6 @@ import { Component } from "@angular/core";
 })
 
 export class TextEditorComponent {
-
+  @Input() userInput: string = "";
+  @Output() emitUserInput: EventEmitter<String> = new EventEmitter<String>();
 };

@@ -1,1 +1,5 @@
-
+<div class="container-fluid">
+    <div class="row">
+        <textarea [(ngModel)]="userInput" (ngModelChange)="emitUserInput.emit(userInput)"></textarea>
+    </div>
+</div>
