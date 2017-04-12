@@ -11,68 +11,77 @@ import { ClockService } from "../../services/clock.service";
 })
 
 export class HomeComponent {
-    pswHorizontalHeader: string[] = ["IP", "IR"];
+    machineCode: string[][];
     memoryState: string[][];
+    pswHorizontalHeader: string[] = ["IP", "IR"];
     pswState: string[];
-    registerState: string[];
-    disassembledConsoleContent: string[];
-    displayConsoleContent: string[];
-    memoryErrorContent: string [];
-    speedOptions: number[] = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
-    speed: {value: number} = {value: 50};
     registerNames: string[] = [
         "0", "1", "2", "3", "4", "5", "6", "7",
         "8", "9", "A", "B", "C", "D (BP)", "E (SP)", "F",
     ];
+    registerState: string[];
+    speed: { value: number } = { value: 50 };
+    speedOptions: number[] = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+    srcCode: string = "";
 
     constructor(private machineStateService: MachineStateService, private clockService: ClockService,
-                private assemblerService: AssemblerService) {
-        this.memoryState = this.machineStateService.getMemoryState();
-        this.registerState = this.machineStateService.getRegisterState();
-        this.pswState = this.machineStateService.getPSWState();
+        private assemblerService: AssemblerService) {
+        this.memoryState = this.machineStateService.memoryState;
+        this.registerState = this.machineStateService.registerState;
+        this.pswState = this.machineStateService.pswState;
     };
 
-    run(): void {
-      this.clockService.run(this.speed.value);
-    };
-
-    step(): void {
-      this.clockService.step();
-    }
-
-    stop(): void {
-      this.clockService.stop();
-    };
+    //Machine Control Buttons
 
     assemble(): void {
-
+        this.assemblerService.assemble(this.srcCode.split(/\n|\n\r/));
+        this.machineCode = this.assemblerService.getAssembledCode();
+        this.machineStateService.memoryState = this.machineCode;
     };
 
     disassemble(): void {
 
     };
 
+    onTextEditorUpdate(event): void {
+        this.srcCode = event;
+    };
+
     reset(): void {
 
     };
 
+    run(): void {
+        this.clockService.run(this.speed.value);
+    };
+
+    step(): void {
+        this.clockService.step();
+    }
+
     setSpeed(speed: number, $event?): void {
-      if ($event) {
-        $event.preventDefault();
-        $event.stopPropagation();
-      }
-      this.speed = { value: speed };
+        if ($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+        }
+        this.speed = { value: speed };
+    };
+
+    stop(): void {
+        this.clockService.stop();
+    };
+
+    //Watchers for primitives
+    
+    getBP(): string {
+        return this.machineStateService.registerState[13];
     };
 
     getIP(): string {
-      return this.machineStateService.getPSWRegister(0);
-    };
-
-    getBP(): string {
-      return this.machineStateService.getRegister(13);
+        return this.machineStateService.pswState[0];
     };
 
     getSP(): string {
-      return this.machineStateService.getRegister(14);
+        return this.machineStateService.registerState[14];
     };
 }

@@ -19,6 +19,7 @@ import { MachineTableComponent } from "./components/machineTable/machineTable.co
 import { RegisterTableComponent } from "./components/registerTable/registerTable.component";
 import { ConsoleComponent } from "./components/console/console.component";
 import { CallStackComponent } from "./components/callStack/callStack.component";
+import { TextEditorComponent } from "./components/textEditor/textEditor.component";
 
 //Services
 import { AssemblerService } from "./services/assembler.service";
@@ -35,7 +36,8 @@ import { OperationFilterPipe } from "./pages/languageReference/operationFilter.p
   declarations: [
       AppComponent, AboutComponent, CallStackComponent, ConsoleComponent,
       HomeComponent, LanguageReferenceComponent, MachineTableComponent,
-      OperationFilterPipe, RegisterTableComponent, SyntaxReferenceComponent
+      OperationFilterPipe, RegisterTableComponent, SyntaxReferenceComponent,
+      TextEditorComponent
   ],
   providers: [
       AssemblerService, ClockService, MachineStateService
